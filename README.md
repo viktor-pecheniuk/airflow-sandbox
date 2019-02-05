@@ -2,7 +2,8 @@
 
 Sandbox for airflow in docker container
 
-Getting started:
+
+# Quick Start:
 
 1 - buid the image:
 
