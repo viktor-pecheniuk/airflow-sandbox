@@ -7,7 +7,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ENV AIRFLOW_HOME=/app/airflow
 ENV SLUGIFY_USES_TEXT_UNIDECODE=yes
 RUN pip install apache-airflow
-COPY /dags/first_dag.py $AIRFLOW_HOME/dags/
+COPY /dags/* $AIRFLOW_HOME/dags/
 RUN airflow initdb
 EXPOSE 8080
 
