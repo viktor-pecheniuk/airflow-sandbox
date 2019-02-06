@@ -28,7 +28,7 @@ def print_context(ds, **kwargs):
 with dag:
     t1 = BashOperator(
         task_id='bash_example',
-        bash_command='echo >>>>>>>>>>>>>>>>>>>>>>>>>>>',
+        bash_command='echo 1111111111111111111111',
         dag=dag)
 
     t2 = PythonOperator(

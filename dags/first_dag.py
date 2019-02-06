@@ -1,12 +1,13 @@
+from datetime import datetime, timedelta
+
 from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
-from datetime import datetime, timedelta
 
 
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2019, 1, 2),
+    'start_date': datetime(2019, 1, 1),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
@@ -19,7 +20,7 @@ default_args = {
 }
 
 
-dag = DAG('my_dag', default_args=default_args,  schedule_interval=timedelta(minutes=1))
+dag = DAG('my_first_dag', default_args=default_args,  schedule_interval=timedelta(minutes=1))
 
 t1 = BashOperator(
     task_id='print_date',
