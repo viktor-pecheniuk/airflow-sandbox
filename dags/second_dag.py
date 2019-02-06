@@ -1,3 +1,4 @@
+import logging
 import pprint
 from datetime import datetime, timedelta
 
@@ -21,14 +22,14 @@ dag = DAG('my_second_dag', default_args=default_args,  schedule_interval=timedel
 
 
 def print_context(ds, **kwargs):
-    print("Here first arg >>>", ds)
-    pprint.pprint(kwargs)
-    return "Done.................."
+    logging.info("Here first arg >>> {}".format(ds))
+    logging.info(pprint.pprint(kwargs))
+    return "Done"
 
 with dag:
     t1 = BashOperator(
         task_id='bash_example',
-        bash_command='echo 1111111111111111111111',
+        bash_command='echo 1',
         dag=dag)
 
     t2 = PythonOperator(
