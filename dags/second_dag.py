@@ -1,16 +1,20 @@
 import logging
 import pprint
-from datetime import datetime, timedelta
+
+from datetime import timedelta
 
 from airflow import DAG
+
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.python_operator import PythonOperator
+
+from airflow.utils.dates import days_ago
 
 
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2019, 2, 6),
+    'start_date': days_ago(1),
     'email': [],
     'email_on_failure': 'viktor.pecheniuk@gmail.com',
     'email_on_retry': False,
