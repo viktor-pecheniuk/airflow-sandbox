@@ -15,7 +15,7 @@ default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
     'start_date': days_ago(1),
-    'email': [],
+    'email': ['test.alert@gmail.com'],
     'email_on_failure': 'viktor.pecheniuk@gmail.com',
     'email_on_retry': False,
     'retries': 1,
