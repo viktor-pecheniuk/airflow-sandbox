@@ -3,7 +3,7 @@ import unittest
 from airflow.models import DagBag
 
 
-class TestHelloWorldDAG(unittest.TestCase):
+class TestMySecondDAG(unittest.TestCase):
     """Check DAG expectation"""
 
     def setUp(self):
@@ -45,5 +45,5 @@ class TestHelloWorldDAG(unittest.TestCase):
         downstream_task_ids = list(map(lambda task: task.task_id, also_run_this_task.downstream_list))
         self.assertListEqual(downstream_task_ids, ['bash_example'])
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestHelloWorldDAG)
+suite = unittest.TestLoader().loadTestsFromTestCase(TestMySecondDAG)
 unittest.TextTestRunner(verbosity=2).run(suite)
