@@ -22,7 +22,7 @@ Sandbox for airflow in docker container
 
 3 - launch particular DAG, e.g. `my_dag`:
 
-   `docker exec airflow_container airflow trigger_dag my_dag`
+  `$ docker exec airflow_container airflow trigger_dag my_dag`
 
 
 # To check metrics exported to Prometheus:
