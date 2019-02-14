@@ -1,7 +1,6 @@
 FROM python:3.6.3
 MAINTAINER "viktor.pecheniuk@gmail.com"
 
-RUN apt-get update && apt-get install -y supervisor
 # Airflow setup
 ARG AIRFLOW_VERSION=1.10.2
 ARG JSON_LOGGER_VERSION=0.1.10
@@ -11,9 +10,14 @@ ENV AIRFLOW_HOME=/app/airflow
 ENV SLUGIFY_USES_TEXT_UNIDECODE=yes
 ENV PYTHONPATH=$AIRFLOW_HOME
 
-RUN pip install apache-airflow==${AIRFLOW_VERSION}
-RUN pip install python-json-logger==${JSON_LOGGER_VERSION}
-RUN pip install prometheus-client==${PROMETHEUS_CLI_VERSION}
+RUN apt-get update \
+  && apt-get install -y supervisor \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/* \
+  && pip install apache-airflow==${AIRFLOW_VERSION} \
+  && pip install python-json-logger==${JSON_LOGGER_VERSION} \
+  && pip install prometheus-client==${PROMETHEUS_CLI_VERSION} \
+  && pip install psycopg2
 
 # replace owns configs
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
