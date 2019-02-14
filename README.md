@@ -16,3 +16,8 @@ Sandbox for airflow in docker container
 3 - launch particular DAG, e.g. `my_dag`:
 
    `docker exec airflow_container airflow trigger_dag my_dag`
+
+
+# To check metrics exported to Prometheus:
+
+Just go to default url in your browser - `your_host:8080/admin/metrics`
