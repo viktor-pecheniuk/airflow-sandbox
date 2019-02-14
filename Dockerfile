@@ -14,7 +14,7 @@ RUN apt-get update \
   && apt-get install -y supervisor \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/* \
-  && pip install apache-airflow==${AIRFLOW_VERSION} \
+  && pip install apache-airflow[postgres]==${AIRFLOW_VERSION} \
   && pip install python-json-logger==${JSON_LOGGER_VERSION} \
   && pip install prometheus-client==${PROMETHEUS_CLI_VERSION} \
   && pip install psycopg2
@@ -28,9 +28,9 @@ COPY dags $AIRFLOW_HOME/dags
 COPY plugins $AIRFLOW_HOME/plugins
 COPY tests $AIRFLOW_HOME/tests
 
-RUN airflow initdb
+CMD airflow initdb
 # run tests before deploy
-RUN cd $AIRFLOW_HOME && python -m unittest
+CMD cd $AIRFLOW_HOME && python -m unittest
 
 EXPOSE 8080
 
