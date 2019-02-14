@@ -11,13 +11,15 @@ Sandbox for airflow in docker container
 
 2 - run the container:
   
-  ```$ docker run -e AIRFLOW__CORE__SQL_ALCHEMY_CONN='postgresql://airflow:airflow_password@host.docker.internal/airflow' \
-        -e DB_PORT=5432 \
-        -e DB_HOST=host.docker.internal -d \
-        -p 8080:8080 \
-        --rm --name airflow_container \
-        airflow-sandbox```
-  
+  ```
+  $ docker run -e AIRFLOW__CORE__SQL_ALCHEMY_CONN='postgresql://airflow:airflow_password@host.docker.internal/airflow' \
+    -e DB_PORT=5432 \
+    -e DB_HOST=host.docker.internal -d \
+    -p 8080:8080 \
+    --rm --name airflow_container \
+    airflow-sandbox
+  ```
+
 3 - launch particular DAG, e.g. `my_dag`:
 
    `docker exec airflow_container airflow trigger_dag my_dag`
