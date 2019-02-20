@@ -20,8 +20,8 @@ RUN apt-get update \
   && pip install psycopg2
 
 # replace owns configs
-COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY conf/airflow.cfg $AIRFLOW_HOME/airflow.cfg
+COPY ./ci/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./ci/conf/airflow.cfg $AIRFLOW_HOME/airflow.cfg
 COPY utils/configs.py $AIRFLOW_HOME/utils/configs.py
 
 COPY dags $AIRFLOW_HOME/dags
