@@ -23,9 +23,9 @@ spec:
         name: airflow-sandbox
         env:
           - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
-            value: postgresql://airflow:airflow_password@localhost/airflow
+            value: postgresql://airflow:airflow_password@postgres/airflow
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           protocol: TCP
 
 ---
@@ -43,6 +43,7 @@ spec:
   - port: 8080
     protocol: TCP
     targetPort: 8080
+    nodePort: 30050
   selector:
     app: airflow
   type: LoadBalancer
