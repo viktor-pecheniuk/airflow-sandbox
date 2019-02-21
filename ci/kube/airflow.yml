@@ -46,4 +46,4 @@ spec:
     nodePort: 30050
   selector:
     app: airflow
-  type: LoadBalancer
+  type: NodePort

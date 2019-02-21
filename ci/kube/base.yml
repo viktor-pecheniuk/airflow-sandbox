@@ -1,0 +1,7 @@
+apiVersion: airflow.k8s.io/v1alpha1
+kind: AirflowBase
+metadata:
+  name: airflow-base
+spec:
+  postgres:
+    operator: False

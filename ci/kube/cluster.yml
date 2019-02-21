@@ -1,0 +1,21 @@
+apiVersion: airflow.k8s.io/v1alpha1
+kind: AirflowCluster
+metadata:
+  name: airflow-cluster
+spec:
+  executor: Local
+  ui:
+    version: "1.10.2"
+  scheduler:
+    version: "1.10.2"
+  config:
+    airflow:
+      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: "60"
+  dags:
+    subdir: "dags/"
+    git:
+      repo: "https://github.com/viktor-pecheniuk/airflow-sandbox"
+      branch: develop
+      once: false
+  airflowbase:
+    name: airflow-base
