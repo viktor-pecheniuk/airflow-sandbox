@@ -82,7 +82,7 @@ To deploy **airflow-operator** you need to install `go` and `kubebuilder` on you
 
   `$ make run`
 
-5 - Create `AirflowBase` and `AirflowCluster` on your cluster
+5 - Create **AirflowBase** and **AirflowCluster** on your cluster
 
   `$ kubectl apply -f ci/kube/base.yml`
 
