@@ -15,7 +15,7 @@ spec:
     subdir: "dags/"
     git:
       repo: "https://github.com/viktor-pecheniuk/airflow-sandbox"
-      branch: develop
+      branch: master
       once: false
   airflowbase:
     name: airflow-base
