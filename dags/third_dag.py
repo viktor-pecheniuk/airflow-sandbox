@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from airflow import DAG
 from airflow.operators.dummy_operator import DummyOperator
@@ -8,7 +8,7 @@ from airflow.operators.bash_operator import BashOperator
 default_args = {
     'owner': 'viktor',
     'depends_on_past': False,
-    'start_date': '2019-01-01',
+    'start_date': datetime(2019, 2, 1),
     'email': ['airflow@example.com'],
     'email_on_failure': False,
     'email_on_retry': False,
