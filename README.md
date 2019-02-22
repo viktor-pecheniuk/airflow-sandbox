@@ -1,4 +1,4 @@
-# airflow-sandbox on top of *Kubernetes*
+# Airflow on top of *Kubernetes*
 
 ## There are couple approaches to deploy your Airflow:
 
@@ -26,7 +26,7 @@
   `$ docker exec airflow_container airflow trigger_dag my_dag`
 
 
-### To check metrics exported to Prometheus:
+### To check metrics exposed to Prometheus:
 
 Just go to default url in your browser - `your_host:8080/admin/metrics`
 
