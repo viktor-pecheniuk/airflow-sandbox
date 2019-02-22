@@ -54,11 +54,11 @@ Now you should see that pods, services, deployments... are successfully running
 
 --------------------------------------------
 
-### 3. Deploy by Airflow K8s Operator.
+### 3. Deploy by k8s Airflow Operator.
 
 Please check this [Repo](https://github.com/GoogleCloudPlatform/airflow-operator) for details.
 
-To deploy **airflow operator** you need to install `go` and `kubebuilder` on your machine.
+To deploy **airflow-operator** you need to install `go` and `kubebuilder` on your machine.
 
 #### Get Started:
 
