@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from airflow import DAG
-from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.bash_operator import BashOperator
 
 
@@ -16,9 +15,14 @@ default_args = {
     'retry_delay': timedelta(minutes=5)
 }
 
-dag = DAG('new_dag', default_args=default_args,  schedule_interval=timedelta(minutes=3))
+dag = DAG('third_dag',
+          default_args=default_args,
+          schedule_interval=timedelta(minutes=3))
 
-dummy_task = DummyOperator(task_id='kick_off_dag')
+t1 = BashOperator(
+    task_id='print_date',
+    bash_command='date',
+    dag=dag)
 
 t2 = BashOperator(
     task_id='k8s_sync_print',
@@ -26,4 +30,4 @@ t2 = BashOperator(
     dag=dag
 )
 
-t2.set_upstream(dummy_task)
+t2.set_upstream(t1)
