@@ -2,7 +2,6 @@
 
 ## There are couple approaches to deploy your Airflow:
 
---------------------------------------------
 
 ### 1. Airflow as a docker container.
 
@@ -44,7 +43,7 @@ Also you need to install and configure `minikube` and `kubectl` on your machine.
 
 3 - Create deployment and service for DB (I'm using PostgreSQL):
 
-  `$ kubectl create -f ci/kube/postges.yml`
+  `$ kubectl create -f ci/kube/postgres.yml`
 
 4 - Create deployment and service for airflow (Pod is creating from your airflow docker image):
 
@@ -62,7 +61,7 @@ To deploy **airflow-operator** you need to install `go` and `kubebuilder` on you
 
 #### Get Started:
 
-1 - clone repo:
+1 - Clone repo:
 
   ```
   $ mkdir -p $GOPATH/src/k8s.io
