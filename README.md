@@ -8,7 +8,7 @@
 
 1 - buid the image:
 
-  `$ docker build -t ci/docker/Dockerfile -t airflow-sandbox .`
+  `$ docker build -f ci/docker/Dockerfile -t airflow-sandbox .`
 
 2 - run the container:
 

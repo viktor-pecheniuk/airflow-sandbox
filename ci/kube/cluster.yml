@@ -10,7 +10,7 @@ spec:
     version: "1.10.2"
   config:
     airflow:
-      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: "60"
+      AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: "180"
   dags:
     subdir: "dags/"
     git:
