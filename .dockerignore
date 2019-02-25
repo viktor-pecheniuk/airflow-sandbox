@@ -1,5 +1,5 @@
 **/.dockerignore
 **/.git
 **/.gitignore
-ci/
+ci/docker
 __pycache__

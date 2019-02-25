@@ -28,9 +28,9 @@ COPY dags $AIRFLOW_HOME/dags
 COPY plugins $AIRFLOW_HOME/plugins
 COPY tests $AIRFLOW_HOME/tests
 
-CMD airflow initdb
 # run tests before deploy
-CMD cd $AIRFLOW_HOME && python -m unittest
+RUN airflow initdb \
+  && cd $AIRFLOW_HOME && python -m unittest
 
 EXPOSE 8080
 
