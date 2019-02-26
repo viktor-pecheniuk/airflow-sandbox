@@ -71,7 +71,7 @@ To deploy **airflow-operator** you need to install `go` and `kubebuilder` on you
 
 2 - Setup your cluster to understand Application resources:
 
-  `$ kubectl apply -f "https://raw.githubusercontent.com/GoogleCloudPlatform/marketplace-k8s-app-tools/master/crd/app-crd.yaml"`
+  `$ make install`
 
 3 - Build manager binary:
 
