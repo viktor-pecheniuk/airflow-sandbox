@@ -7,8 +7,6 @@ from airflow.utils.decorators import apply_defaults
 
 from utils.helpers import yaml_2_json
 
-from kubernetes.client.rest import ApiException
-
 
 class SparkJobOperator(BaseOperator):
 
@@ -27,10 +25,10 @@ class SparkJobOperator(BaseOperator):
         config = kube_config.load_kube_config()
         api_instance = kube_client.CustomObjectsApi(kube_client.ApiClient(config))
         # params to create custom object
-        group = 'sparkoperator.k8s.io'  # str | The custom resource's group name
-        version = 'v1beta1'  # str | The custom resource's version
-        namespace = 'default'  # str | The custom resource's namespace
-        plural = 'sparkapplications'  # str | The custom resource's plural name. For TPRs this would be lowercase plural kind.
+        group = 'sparkoperator.k8s.io'
+        version = 'v1beta1'
+        namespace = 'default'
+        plural = 'sparkapplications'
         crd_body = yaml_2_json(self.crd_file)
         try:
             api_response = api_instance.create_namespaced_custom_object(group,
@@ -39,6 +37,7 @@ class SparkJobOperator(BaseOperator):
                                                                         plural,
                                                                         crd_body,
                                                                         pretty=True)
-            print(api_response)
-        except ApiException as e:
-            print("Exception when calling CustomObjectsApi->create_namespaced_custom_object: %s\n" % e)
+        except AirflowException as e:
+            api_response = {}
+            print("Exception when calling CustomObjectsApi -> create_namespaced_custom_object: %s\n" % e)
+        return api_response

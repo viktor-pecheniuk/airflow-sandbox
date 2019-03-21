@@ -19,7 +19,7 @@ default_args = {
     'retry_delay': timedelta(minutes=5)
 }
 
-dag = DAG('spark_dag',
+dag = DAG(dag_id='spark_dag',
           default_args=default_args,
           schedule_interval=timedelta(minutes=3))
 
@@ -29,10 +29,10 @@ t1 = BashOperator(
     dag=dag)
 
 t2 = SparkJobOperator(
-    yaml_file='{}/../ci/kube/spark_prometheus.yml'.format(os.path.abspath('.')),
-    timeout=60,
     task_id='k8s_spark',
+    yaml_file='{}/ci/kube/spark_prometheus.yml'.format(os.path.abspath('.')),
+    timeout=60,
     dag=dag
 )
 
-t2.set_upstream(t1)
+t2 >> t1
