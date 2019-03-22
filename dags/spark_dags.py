@@ -26,13 +26,16 @@ dag = DAG(dag_id='spark_dag',
 t1 = BashOperator(
     task_id='print_date',
     bash_command='date',
-    dag=dag)
-
-t2 = SparkJobOperator(
-    task_id='k8s_spark',
-    yaml_file='{}/ci/kube/spark_prometheus.yml'.format(os.path.abspath('.')),
-    timeout=60,
     dag=dag
 )
 
-t2 >> t1
+test_job = SparkJobOperator(
+    task_id='k8s_spark',
+    namespace='default',
+    job_name='spark-pi',
+    yml_file='{}/ci/kube/spark_prometheus.yml'.format(os.path.abspath('.')),
+    timeout=300,
+    dag=dag
+)
+
+t1 << test_job
