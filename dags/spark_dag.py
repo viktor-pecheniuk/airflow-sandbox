@@ -23,7 +23,7 @@ default_args = {
 dag = DAG(
     dag_id='spark_dag',
     default_args=default_args,
-    schedule_interval=timedelta(minutes=60)
+    schedule_interval=timedelta(minutes=720)
 )
 
 t1 = BashOperator(

@@ -26,6 +26,10 @@ class SparkJobOperator(BaseOperator):
         self.job_name = job_name
         self.crd_file = yml_file
         self.timeout = timeout
+        # TODO check later when new version will be available
+        self.group = 'sparkoperator.k8s.io'
+        self.version = 'v1beta1'
+        self.plural = 'sparkapplications'
 
     def execute(self, context):
         # TODO check later with prod kube
@@ -33,22 +37,23 @@ class SparkJobOperator(BaseOperator):
         # create an instance of the API class
         api_instance = CustomObjectsApi(ApiClient(config))
         # params to create custom object
-        group = 'sparkoperator.k8s.io'
-        version = 'v1beta1'
-        plural = 'sparkapplications'
-        namespace = self.namespace
-        spark_app_name = self.job_name
-        crd_body = yaml_2_json(self.crd_file)
-        crd_body['metadata']['name'] = spark_app_name
-        w = Watch()
-        params = [group, version, namespace, plural]
-        try:
-            api_instance.create_namespaced_custom_object(*params, crd_body, pretty=False)
-        except AirflowException as e:
-            print("Exception when calling CustomObjectsApi -> create_namespaced_custom_object: %s\n" % e)
+        params = [self.group, self.version, self.namespace, self.plural]
+        crd_created = self.create_custom_definition(api_instance, *params)
+        if crd_created:
+            w = Watch()
+            for event in w.stream(api_instance.list_namespaced_custom_object, *params, timeout_seconds=self.timeout):
+                job_name = event.get('object', {}).get('metadata', {}).get('name')
+                job_state = event.get('object', {}).get('status', {}).get('applicationState', {}).get('state')
+                if job_name == self.job_name and job_state == "COMPLETED":
+                    break
 
-        for event in w.stream(api_instance.list_namespaced_custom_object, *params, timeout_seconds=self.timeout):
-            job_name = event.get('object', {}).get('metadata', {}).get('name')
-            job_state = event.get('object', {}).get('status', {}).get('applicationState', {}).get('state')
-            if job_name == spark_app_name and job_state == "COMPLETED":
-                break
+    def create_custom_definition(self, kube_api_instance, *params):
+        crd_body = yaml_2_json(self.crd_file)
+        crd_body['metadata']['name'] = self.job_name
+        try:
+            success = True
+            kube_api_instance.create_namespaced_custom_object(*params, crd_body, pretty=False)
+        except AirflowException as e:
+            success = False
+            print("Exception when calling CustomObjectsApi -> create_namespaced_custom_object: %s\n" % e)
+        return success
