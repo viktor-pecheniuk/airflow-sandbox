@@ -1,3 +1,4 @@
+import os
 import time
 from datetime import datetime
 
@@ -15,7 +16,7 @@ class TestSparkOperator(TestCase):
 
     def setUp(self):
         self.namespace = "default"
-        self.yml_file = "files/spark.yml"
+        self.yml_file = "{}/files/spark.yml".format(os.path.abspath('.'))
         self.group = 'sparkoperator.k8s.io'
         self.version = 'v1beta1'
         self.plural = 'sparkapplications'
