@@ -1,10 +1,11 @@
-FROM python:3.6.3
+FROM python:3.7
 MAINTAINER "viktor.pecheniuk@gmail.com"
 
 # Airflow setup
 ARG AIRFLOW_VERSION=1.10.2
 ARG JSON_LOGGER_VERSION=0.1.10
 ARG PROMETHEUS_CLI_VERSION=0.5.0
+ARG K8S_VERSION=9.0.0
 
 ENV AIRFLOW_HOME=/app/airflow
 ENV SLUGIFY_USES_TEXT_UNIDECODE=yes
@@ -17,20 +18,20 @@ RUN apt-get update \
   && pip install apache-airflow[postgres]==${AIRFLOW_VERSION} \
   && pip install python-json-logger==${JSON_LOGGER_VERSION} \
   && pip install prometheus-client==${PROMETHEUS_CLI_VERSION} \
+  && pip install kubernetes==${K8S_VERSION} \
   && pip install psycopg2
 
 # replace owns configs
 COPY ./ci/conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./ci/conf/airflow.cfg $AIRFLOW_HOME/airflow.cfg
-COPY utils/configs.py $AIRFLOW_HOME/utils/configs.py
 
-COPY dags $AIRFLOW_HOME/dags
-COPY plugins $AIRFLOW_HOME/plugins
-COPY tests $AIRFLOW_HOME/tests
+COPY . $AIRFLOW_HOME
+
+RUN rm -rf $AIRFLOW_HOME/ci
 
 # run tests before deploy
 RUN airflow initdb \
-  && cd $AIRFLOW_HOME && python -m unittest
+  && cd $AIRFLOW_HOME && python -m unittest tests/unit/*
 
 EXPOSE 8080
 
