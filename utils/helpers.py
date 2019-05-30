@@ -8,7 +8,11 @@ def yaml_2_json(yaml_file):
     """
     with open(yaml_file, 'r') as stream:
         try:
-            data = yaml.load(stream)
+            data = yaml.safe_load_all(stream)
         except Exception:
             raise
-    return data
+
+        res = []
+        for doc in data:
+            res.append(doc)
+    return res

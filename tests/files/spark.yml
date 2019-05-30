@@ -9,3 +9,14 @@ spec:
   image: "gcr.io/spark-operator/spark:v2.4.0-gcs-prometheus"
   mainClass: org.apache.spark.examples.SparkPi
   mainApplicationFile: local:///opt/spark/examples/jars/spark-examples_2.11-2.4.0.jar
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-config
+  namespace: default
+data:
+  SPECIAL_LEVEL: very
+  SPECIAL_TYPE: charm
